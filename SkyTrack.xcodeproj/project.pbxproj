@@ -1,0 +1,388 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		27A7471CE2E56F5F66D99B7E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEAD42132AC733E33FEEB202 /* Cocoa.framework */; };
+		3A50A7174DE79313781540DC /* PlanetModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2671A1F5DE1CE976AE61C11D /* PlanetModel.m */; };
+		52412C5C7036D79E3AF37E53 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9952E5EB28094E7E4BC4DAE3 /* CoreLocation.framework */; };
+		546A8BF8F0536992A52BB834 /* earth_day.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F0FCC3264297535FFF4C2404 /* earth_day.jpg */; };
+		567ADF75D1FA8F1178963B3C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDEC544C2910F314A293990A /* MapKit.framework */; };
+		5B4CF30C53AF87A39AE8285C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C447DB7EE19E4CDD0292BF /* AppDelegate.m */; };
+		6FA234FE89F62A61EDC6FBED /* SceneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1A1727D98574A2C73FF5207 /* SceneKit.framework */; };
+		731A2B0F452D810FB022DA02 /* earth_clouds.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A94F174DCC0F9D942F80FB0 /* earth_clouds.png */; };
+		7FC5573B8EF11022F9EF8716 /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D298027C71B2BCEBDAE68B6 /* MainWindowController.m */; };
+		85CEAB5C7E6FF787A8BE9F98 /* earth_normal.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9CD0B982E9D59E1782C7E0B8 /* earth_normal.jpg */; };
+		9DBAC6060046D714445D1D18 /* earth_specular.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FFED94507C41459667CF1707 /* earth_specular.jpg */; };
+		AD9050DA096D449E4888AF07 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A00505B36E5DCAD5B30ADA8 /* main.m */; };
+		B1809D96D7B05FAB3E46AC77 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85E5203DB118BAF2D7F0359F /* WebKit.framework */; };
+		B9855E7FC0A682475A2C0B1A /* sky.html in Resources */ = {isa = PBXBuildFile; fileRef = 09BD0501794B07828AF37234 /* sky.html */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		09BD0501794B07828AF37234 /* sky.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = sky.html; sourceTree = "<group>"; };
+		2671A1F5DE1CE976AE61C11D /* PlanetModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlanetModel.m; sourceTree = "<group>"; };
+		4F8872D8BD640BC4D41B5D39 /* PlanetModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlanetModel.h; sourceTree = "<group>"; };
+		5D298027C71B2BCEBDAE68B6 /* MainWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainWindowController.m; sourceTree = "<group>"; };
+		68C447DB7EE19E4CDD0292BF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		6A94F174DCC0F9D942F80FB0 /* earth_clouds.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = earth_clouds.png; sourceTree = "<group>"; };
+		7019B4A77973785F0F2EF7C7 /* MainWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainWindowController.h; sourceTree = "<group>"; };
+		823D5C79928E13DEDDB7906D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		85E5203DB118BAF2D7F0359F /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		9952E5EB28094E7E4BC4DAE3 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		9A00505B36E5DCAD5B30ADA8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		9CD0B982E9D59E1782C7E0B8 /* earth_normal.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = earth_normal.jpg; sourceTree = "<group>"; };
+		A3B99E89DA785CF829B90C05 /* SkyTrack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SkyTrack.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D1A1727D98574A2C73FF5207 /* SceneKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SceneKit.framework; path = System/Library/Frameworks/SceneKit.framework; sourceTree = SDKROOT; };
+		DEAD42132AC733E33FEEB202 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		EDEC544C2910F314A293990A /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		F0FCC3264297535FFF4C2404 /* earth_day.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = earth_day.jpg; sourceTree = "<group>"; };
+		FFED94507C41459667CF1707 /* earth_specular.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = earth_specular.jpg; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		27EB2CD47C9B3AFE668FC5BA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				27A7471CE2E56F5F66D99B7E /* Cocoa.framework in Frameworks */,
+				B1809D96D7B05FAB3E46AC77 /* WebKit.framework in Frameworks */,
+				52412C5C7036D79E3AF37E53 /* CoreLocation.framework in Frameworks */,
+				6FA234FE89F62A61EDC6FBED /* SceneKit.framework in Frameworks */,
+				567ADF75D1FA8F1178963B3C /* MapKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4CB23F4369A442B463BF2120 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A3B99E89DA785CF829B90C05 /* SkyTrack.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D9CF7C8BD6C06F30C22EE81A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DEAD42132AC733E33FEEB202 /* Cocoa.framework */,
+				9952E5EB28094E7E4BC4DAE3 /* CoreLocation.framework */,
+				EDEC544C2910F314A293990A /* MapKit.framework */,
+				D1A1727D98574A2C73FF5207 /* SceneKit.framework */,
+				85E5203DB118BAF2D7F0359F /* WebKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E9A9D48CB73752EAFB268545 /* SkyTrack */ = {
+			isa = PBXGroup;
+			children = (
+				823D5C79928E13DEDDB7906D /* AppDelegate.h */,
+				68C447DB7EE19E4CDD0292BF /* AppDelegate.m */,
+				9A00505B36E5DCAD5B30ADA8 /* main.m */,
+				7019B4A77973785F0F2EF7C7 /* MainWindowController.h */,
+				5D298027C71B2BCEBDAE68B6 /* MainWindowController.m */,
+				4F8872D8BD640BC4D41B5D39 /* PlanetModel.h */,
+				2671A1F5DE1CE976AE61C11D /* PlanetModel.m */,
+				ECCEBD5D00E6207C31F32268 /* Resources */,
+			);
+			path = SkyTrack;
+			sourceTree = "<group>";
+		};
+		ECCEBD5D00E6207C31F32268 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				6A94F174DCC0F9D942F80FB0 /* earth_clouds.png */,
+				F0FCC3264297535FFF4C2404 /* earth_day.jpg */,
+				9CD0B982E9D59E1782C7E0B8 /* earth_normal.jpg */,
+				FFED94507C41459667CF1707 /* earth_specular.jpg */,
+				09BD0501794B07828AF37234 /* sky.html */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		F0AAAF90F04CFA91E0F699EA = {
+			isa = PBXGroup;
+			children = (
+				E9A9D48CB73752EAFB268545 /* SkyTrack */,
+				D9CF7C8BD6C06F30C22EE81A /* Frameworks */,
+				4CB23F4369A442B463BF2120 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FFD1E35F7CB23CA5E8282CA0 /* SkyTrack */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CB357C71C4C00146A6A88D43 /* Build configuration list for PBXNativeTarget "SkyTrack" */;
+			buildPhases = (
+				3AD5C8B1FD7DF508660045EB /* Sources */,
+				1945238FD82D9BA2E7EBE7A4 /* Resources */,
+				27EB2CD47C9B3AFE668FC5BA /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SkyTrack;
+			packageProductDependencies = (
+			);
+			productName = SkyTrack;
+			productReference = A3B99E89DA785CF829B90C05 /* SkyTrack.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8008E54B18BFA7C0135B4F9B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					FFD1E35F7CB23CA5E8282CA0 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Manual;
+					};
+				};
+			};
+			buildConfigurationList = 9639346BA00D2B23FC0B1405 /* Build configuration list for PBXProject "SkyTrack" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = F0AAAF90F04CFA91E0F699EA;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 4CB23F4369A442B463BF2120 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FFD1E35F7CB23CA5E8282CA0 /* SkyTrack */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1945238FD82D9BA2E7EBE7A4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				731A2B0F452D810FB022DA02 /* earth_clouds.png in Resources */,
+				546A8BF8F0536992A52BB834 /* earth_day.jpg in Resources */,
+				85CEAB5C7E6FF787A8BE9F98 /* earth_normal.jpg in Resources */,
+				9DBAC6060046D714445D1D18 /* earth_specular.jpg in Resources */,
+				B9855E7FC0A682475A2C0B1A /* sky.html in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3AD5C8B1FD7DF508660045EB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5B4CF30C53AF87A39AE8285C /* AppDelegate.m in Sources */,
+				7FC5573B8EF11022F9EF8716 /* MainWindowController.m in Sources */,
+				3A50A7174DE79313781540DC /* PlanetModel.m in Sources */,
+				AD9050DA096D449E4888AF07 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		509EFDFB9F426155568573F4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		9D43032886C75C1614A80262 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		E53C6E8CE5C9EDDF573F5E37 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = SkyTrack/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.skytrack.app;
+				PRODUCT_NAME = SkyTrack;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		E628836F3F7692A06722E505 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = SkyTrack/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.skytrack.app;
+				PRODUCT_NAME = SkyTrack;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9639346BA00D2B23FC0B1405 /* Build configuration list for PBXProject "SkyTrack" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				509EFDFB9F426155568573F4 /* Debug */,
+				9D43032886C75C1614A80262 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CB357C71C4C00146A6A88D43 /* Build configuration list for PBXNativeTarget "SkyTrack" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E53C6E8CE5C9EDDF573F5E37 /* Debug */,
+				E628836F3F7692A06722E505 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 8008E54B18BFA7C0135B4F9B /* Project object */;
+}
