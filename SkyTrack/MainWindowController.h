@@ -24,6 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
 
++ (nullable NSImage *)applicationIconImage;
+
 - (IBAction)updateSky:(nullable id)sender;
 - (IBAction)selectLocation:(nullable id)sender;
 

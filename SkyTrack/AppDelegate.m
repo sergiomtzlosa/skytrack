@@ -6,6 +6,11 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     [self buildMainMenu];
 
+    NSImage *icon = [MainWindowController applicationIconImage];
+    if (icon) {
+        [NSApp setApplicationIconImage:icon];
+    }
+
     self.mainWindowController = [[MainWindowController alloc] init];
     [self.mainWindowController showWindow:self];
     [NSApp activateIgnoringOtherApps:YES];

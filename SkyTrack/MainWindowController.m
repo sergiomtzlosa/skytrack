@@ -318,6 +318,26 @@ static void SKDrawStreaks(CGContextRef ctx, CGSize size, NSInteger count,
 
 @implementation MainWindowController
 
++ (nullable NSImage *)applicationIconImage {
+    NSImage *image = [NSImage imageNamed:@"AppIcon"];
+    if (!image) {
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"AppIcon" ofType:@"png"];
+        if (path) {
+            image = [[NSImage alloc] initWithContentsOfFile:path];
+        }
+    }
+    if (!image) {
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"AppIcon" ofType:@"icns"];
+        if (path) {
+            image = [[NSImage alloc] initWithContentsOfFile:path];
+        }
+    }
+    if (!image) {
+        image = [NSImage imageNamed:NSImageNameApplicationIcon];
+    }
+    return image;
+}
+
 - (instancetype)init {
     NSRect frame = NSMakeRect(0, 0, 1380, 800);
     NSWindow *window = [[NSWindow alloc] initWithContentRect:frame
@@ -328,6 +348,10 @@ static void SKDrawStreaks(CGContextRef ctx, CGSize size, NSInteger count,
                                                      backing:NSBackingStoreBuffered
                                                        defer:NO];
     window.title = @"SkyTrack";
+    NSImage *appIcon = [MainWindowController applicationIconImage];
+    if (appIcon) {
+        [NSApp setApplicationIconImage:appIcon];
+    }
     window.minSize = NSMakeSize(1100, 620);
     window.restorable = NO;
     [window center];
@@ -391,6 +415,35 @@ static void SKDrawStreaks(CGContextRef ctx, CGSize size, NSInteger count,
     sidebar.translatesAutoresizingMaskIntoConstraints = NO;
     sidebar.material = NSVisualEffectMaterialSidebar;
     sidebar.blendingMode = NSVisualEffectBlendingModeBehindWindow;
+
+    // Sidebar header: App icon and title branding
+    NSView *headerView = [[NSView alloc] init];
+    headerView.translatesAutoresizingMaskIntoConstraints = NO;
+
+    NSImageView *iconImageView = [[NSImageView alloc] init];
+    iconImageView.translatesAutoresizingMaskIntoConstraints = NO;
+    iconImageView.imageScaling = NSImageScaleProportionallyUpOrDown;
+    iconImageView.image = [MainWindowController applicationIconImage];
+    [headerView addSubview:iconImageView];
+
+    NSTextField *appTitleLabel = [NSTextField labelWithString:@"SkyTrack"];
+    appTitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    appTitleLabel.font = [NSFont systemFontOfSize:14 weight:NSFontWeightBold];
+    appTitleLabel.textColor = [NSColor labelColor];
+    [headerView addSubview:appTitleLabel];
+
+    NSTextField *appSubtitleLabel = [NSTextField labelWithString:@"Solar System & Sky"];
+    appSubtitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    appSubtitleLabel.font = [NSFont systemFontOfSize:10.5 weight:NSFontWeightRegular];
+    appSubtitleLabel.textColor = [NSColor secondaryLabelColor];
+    [headerView addSubview:appSubtitleLabel];
+
+    NSBox *headerSeparator = [[NSBox alloc] init];
+    headerSeparator.translatesAutoresizingMaskIntoConstraints = NO;
+    headerSeparator.boxType = NSBoxSeparator;
+    [headerView addSubview:headerSeparator];
+
+    [sidebar addSubview:headerView];
     [sidebar addSubview:scrollView];
     self.sidebarView = sidebar;
 
@@ -482,9 +535,33 @@ static void SKDrawStreaks(CGContextRef ctx, CGSize size, NSInteger count,
         [sidebar.bottomAnchor constraintEqualToAnchor:content.bottomAnchor],
         sidebarWidthConstraint,
 
+        // Sidebar header
+        [headerView.leadingAnchor constraintEqualToAnchor:sidebar.leadingAnchor],
+        [headerView.trailingAnchor constraintEqualToAnchor:sidebar.trailingAnchor],
+        [headerView.topAnchor constraintEqualToAnchor:sidebar.topAnchor constant:8],
+        [headerView.heightAnchor constraintEqualToConstant:50],
+
+        [iconImageView.leadingAnchor constraintEqualToAnchor:headerView.leadingAnchor constant:14],
+        [iconImageView.centerYAnchor constraintEqualToAnchor:headerView.centerYAnchor constant:-3],
+        [iconImageView.widthAnchor constraintEqualToConstant:36],
+        [iconImageView.heightAnchor constraintEqualToConstant:36],
+
+        [appTitleLabel.leadingAnchor constraintEqualToAnchor:iconImageView.trailingAnchor constant:10],
+        [appTitleLabel.topAnchor constraintEqualToAnchor:iconImageView.topAnchor constant:1],
+        [appTitleLabel.trailingAnchor constraintEqualToAnchor:headerView.trailingAnchor constant:-12],
+
+        [appSubtitleLabel.leadingAnchor constraintEqualToAnchor:appTitleLabel.leadingAnchor],
+        [appSubtitleLabel.topAnchor constraintEqualToAnchor:appTitleLabel.bottomAnchor constant:1],
+        [appSubtitleLabel.trailingAnchor constraintEqualToAnchor:headerView.trailingAnchor constant:-12],
+
+        [headerSeparator.leadingAnchor constraintEqualToAnchor:headerView.leadingAnchor constant:12],
+        [headerSeparator.trailingAnchor constraintEqualToAnchor:headerView.trailingAnchor constant:-12],
+        [headerSeparator.bottomAnchor constraintEqualToAnchor:headerView.bottomAnchor],
+
+        // Table scroll view
         [scrollView.leadingAnchor constraintEqualToAnchor:sidebar.leadingAnchor],
         [scrollView.trailingAnchor constraintEqualToAnchor:sidebar.trailingAnchor],
-        [scrollView.topAnchor constraintEqualToAnchor:sidebar.topAnchor],
+        [scrollView.topAnchor constraintEqualToAnchor:headerView.bottomAnchor constant:4],
         [scrollView.bottomAnchor constraintEqualToAnchor:sidebar.bottomAnchor],
 
         // Web view
@@ -737,6 +814,7 @@ static void SKDrawStreaks(CGContextRef ctx, CGSize size, NSInteger count,
 
     NSLayoutConstraint *widthConstraint = [container.widthAnchor constraintEqualToAnchor:locationField.widthAnchor];
     widthConstraint.priority = NSLayoutPriorityDefaultHigh;
+    heightConstraint.priority = NSLayoutPriorityDefaultHigh;
 
     [NSLayoutConstraint activateConstraints:@[
         [container.leadingAnchor constraintEqualToAnchor:locationField.leadingAnchor],
