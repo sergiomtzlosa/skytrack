@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SkyTrack Sky Map</title>
+<style>
+    :root {
+        color-scheme: dark;
+    }
+    html, body {
+        margin: 0;
+        height: 100%;
+        overflow: hidden;
+        background: #05070f;
+        font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+        color: #dbe6ff;
+    }
+    canvas {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+    .overlay {
+        position: absolute;
+        left: 22px;
+        top: 20px;
+        pointer-events: none;
+        text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8);
+    }
+    .overlay h1 {
+        margin: 0 0 6px;
+        font-size: 20px;
+        font-weight: 600;
+        letter-spacing: 0.4px;
+    }
+    .overlay p {
+        margin: 2px 0;
+        font-size: 12px;
+        color: #91a4c9;
+    }
+    .overlay .location {
+        color: #cddcff;
+    }
+    .legend {
+        position: absolute;
+        right: 22px;
+        top: 20px;
+        width: 190px;
+        padding: 12px 14px;
+        border-radius: 10px;
+        background: rgba(10, 16, 32, 0.6);
+        border: 1px solid rgba(120, 150, 220, 0.18);
+        backdrop-filter: blur(8px);
+        font-size: 12px;
+        pointer-events: none;
+    }
+    .legend h2 {
+        margin: 0 0 8px;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #7f93bb;
+        font-weight: 600;
+    }
+    .legend ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    .legend li {
+        display: flex;
+        justify-content: space-between;
+        padding: 3px 0;
+    }
+    .legend li.below {
+        color: #58688a;
+    }
+    .legend .dot {
+        display: inline-block;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        margin-right: 7px;
+        vertical-align: middle;
+    }
+    .legend .status {
+        color: #7f93bb;
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+    }
+    .legend li.below .status {
+        color: #4b5a78;
+    }
+    .hint {
+        position: absolute;
+        left: 22px;
+        bottom: 16px;
+        font-size: 11px;
+        color: #5f7297;
+        pointer-events: none;
+    }
+</style>
+</head>
+<body>
+<canvas id="sky"></canvas>
+<div class="overlay">
+    <h1>SkyTrack</h1>
+    <p>{{DATE}}</p>
+    <p class="location">{{LOCATION}} · {{LAT}}°, {{LON}}°</p>
+    <p>Approximate planetary positions for the selected date</p>
+</div>
+<div class="legend">
+    <h2>Planets</h2>
+    <ul id="legend"></ul>
+</div>
+<div class="hint">Click a planet to open its 3D view — azimuth across the bottom, altitude above the horizon</div>
+<script>
+(function () {
+    const canvas = document.getElementById('sky');
+    const ctx = canvas.getContext('2d');
+    const planetData = {{PLANETS}};
+    const latitude = {{LAT}};
+    const longitude = {{LON}};
+    const selectedDate = new Date('{{DATE_ISO}}');
+
+    // Screen-space hit areas rebuilt on every draw, plus the currently hovered planet.
+    const hitAreas = [];
+    let hoveredPlanet = null;
+
+    const COLORS = {
+        Mercury: '#c8b79a',
+        Venus: '#f4d58a',
+        Earth: '#6fa8ff',
+        Mars: '#e2704f',
+        Jupiter: '#e0b97f',
+        Saturn: '#e6d3a3',
+        Uranus: '#9fe3e0',
+        Neptune: '#7d9bf0',
+        Pluto: '#c9b39c'
+    };
+
+    // Mean orbital elements at J2000 with per-century rates (JPL approximation).
+    const ELEMENTS = {
+        Mercury: { a: [0.38709927, 0.00000037], e: [0.20563593, 0.00001906], i: [7.00497902, -0.00594749], L: [252.25032350, 149472.67411175], peri: [77.45779628, 0.16047689], node: [48.33076593, -0.12534081] },
+        Venus:   { a: [0.72333566, 0.00000390], e: [0.00677672, -0.00004107], i: [3.39467605, -0.00078890], L: [181.97909950, 58517.81538729], peri: [131.60246718, 0.00268329], node: [76.67984255, -0.27769418] },
+        Earth:   { a: [1.00000261, 0.00000562], e: [0.01671123, -0.00004392], i: [-0.00001531, -0.01294668], L: [100.46457166, 35999.37244981], peri: [102.93768193, 0.32327364], node: [0.0, 0.0] },
+        Mars:    { a: [1.52371034, 0.00001847], e: [0.09339410, 0.00007882], i: [1.84969142, -0.00813131], L: [-4.55343205, 19140.30268499], peri: [-23.94362959, 0.44441088], node: [49.55953891, -0.29257343] },
+        Jupiter: { a: [5.20288700, -0.00011607], e: [0.04838624, -0.00013253], i: [1.30439695, -0.00183714], L: [34.39644051, 3034.74612775], peri: [14.72847983, 0.21252668], node: [100.47390909, 0.20469106] },
+        Saturn:  { a: [9.53667594, -0.00125060], e: [0.05386179, -0.00050991], i: [2.48599187, 0.00193609], L: [49.95424423, 1222.49362201], peri: [92.59887831, -0.41897216], node: [113.66242448, -0.28867794] },
+        Uranus:  { a: [19.18916464, -0.00196176], e: [0.04725744, -0.00004397], i: [0.77263783, -0.00242939], L: [313.23810451, 428.48202785], peri: [170.95427630, 0.40805281], node: [74.01692503, 0.04240589] },
+        Neptune: { a: [30.06992276, 0.00026291], e: [0.00859048, 0.00005105], i: [1.77004347, 0.00035372], L: [-55.12002969, 218.45945325], peri: [44.96476227, -0.32241464], node: [131.78422574, -0.00508664] },
+        Pluto:   { a: [39.48211675, -0.00031596], e: [0.24882730, 0.00005170], i: [17.14001206, 0.00004818], L: [238.92903833, 145.20780515], peri: [224.06891629, -0.04062942], node: [110.30393684, -0.01183482] }
+    };
+
+    const DEG = Math.PI / 180;
+    const OBLIQUITY = 23.43928 * DEG;
+
+    function julianDate(date) {
+        return date.getTime() / 86400000 + 2440587.5;
+    }
+
+    function normalize(degrees) {
+        return ((degrees % 360) + 360) % 360;
+    }
+
+    function heliocentric(name, T) {
+        const el = ELEMENTS[name];
+        const a = el.a[0] + el.a[1] * T;
+        const e = el.e[0] + el.e[1] * T;
+        const i = (el.i[0] + el.i[1] * T) * DEG;
+        const L = normalize(el.L[0] + el.L[1] * T) * DEG;
+        const peri = normalize(el.peri[0] + el.peri[1] * T) * DEG;
+        const node = normalize(el.node[0] + el.node[1] * T) * DEG;
+
+        let M = normalize(L / DEG - peri / DEG) * DEG;
+        if (M > Math.PI) M -= 2 * Math.PI;
+        let E = M;
+        for (let k = 0; k < 8; k++) {
+            E = M + e * Math.sin(E);
+        }
+
+        const xp = a * (Math.cos(E) - e);
+        const yp = a * Math.sqrt(1 - e * e) * Math.sin(E);
+        const w = peri - node;
+
+        const x = (Math.cos(w) * Math.cos(node) - Math.sin(w) * Math.sin(node) * Math.cos(i)) * xp
+                + (-Math.sin(w) * Math.cos(node) - Math.cos(w) * Math.sin(node) * Math.cos(i)) * yp;
+        const y = (Math.cos(w) * Math.sin(node) + Math.sin(w) * Math.cos(node) * Math.cos(i)) * xp
+                + (-Math.sin(w) * Math.sin(node) + Math.cos(w) * Math.cos(node) * Math.cos(i)) * yp;
+        const z = (Math.sin(w) * Math.sin(i)) * xp + (Math.cos(w) * Math.sin(i)) * yp;
+
+        return { x, y, z };
+    }
+
+    function horizontalPosition(name, T, jd) {
+        const planet = heliocentric(name, T);
+        const earth = heliocentric('Earth', T);
+        const x = planet.x - earth.x;
+        const y = planet.y - earth.y;
+        const z = planet.z - earth.z;
+
+        const eclipticLon = Math.atan2(y, x);
+        const eclipticLat = Math.atan2(z, Math.sqrt(x * x + y * y));
+
+        const ra = Math.atan2(
+            Math.sin(eclipticLon) * Math.cos(OBLIQUITY) - Math.tan(eclipticLat) * Math.sin(OBLIQUITY),
+            Math.cos(eclipticLon)
+        );
+        const dec = Math.asin(
+            Math.sin(eclipticLat) * Math.cos(OBLIQUITY) +
+            Math.cos(eclipticLat) * Math.sin(OBLIQUITY) * Math.sin(eclipticLon)
+        );
+
+        const gmst = normalize(280.46061837 + 360.98564736629 * (jd - 2451545.0)
+                     + 0.000387933 * T * T - (T * T * T) / 38710000);
+        const hourAngle = (normalize(gmst + longitude) * DEG - ra + Math.PI * 3) % (Math.PI * 2) - Math.PI;
+
+        const lat = latitude * DEG;
+        const sinAlt = Math.sin(dec) * Math.sin(lat) + Math.cos(dec) * Math.cos(lat) * Math.cos(hourAngle);
+        const altitude = Math.asin(Math.max(-1, Math.min(1, sinAlt)));
+        const azimuth = Math.atan2(
+            Math.sin(hourAngle),
+            Math.cos(hourAngle) * Math.sin(lat) - Math.tan(dec) * Math.cos(lat)
+        );
+
+        return {
+            altitude: altitude / DEG,
+            azimuth: normalize(azimuth / DEG + 180)
+        };
+    }
+
+    function seededRandom(seed) {
+        let value = seed % 2147483647;
+        if (value <= 0) value += 2147483646;
+        return function () {
+            value = value * 16807 % 2147483647;
+            return (value - 1) / 2147483646;
+        };
+    }
+
+    function resize() {
+        const scale = window.devicePixelRatio || 1;
+        canvas.width = Math.max(1, Math.floor(window.innerWidth * scale));
+        canvas.height = Math.max(1, Math.floor(window.innerHeight * scale));
+        ctx.setTransform(scale, 0, 0, scale, 0, 0);
+        draw();
+    }
+
+    function draw() {
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        const marginLeft = 34;
+        const marginRight = 226;
+        const top = 132;
+        const bottom = 64;
+        const chartWidth = Math.max(80, width - marginLeft - marginRight);
+        const chartHeight = Math.max(80, height - top - bottom);
+
+        ctx.clearRect(0, 0, width, height);
+
+        const background = ctx.createLinearGradient(0, 0, 0, height);
+        background.addColorStop(0, '#070b18');
+        background.addColorStop(0.62, '#0b1327');
+        background.addColorStop(1, '#111c36');
+        ctx.fillStyle = background;
+        ctx.fillRect(0, 0, width, height);
+
+        // Chart frame
+        ctx.save();
+        ctx.fillStyle = 'rgba(8, 13, 27, 0.72)';
+        ctx.strokeStyle = 'rgba(107, 137, 200, 0.24)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.rect(marginLeft, top, chartWidth, chartHeight);
+        ctx.fill();
+        ctx.stroke();
+
+        // Altitude grid
+        ctx.strokeStyle = 'rgba(91, 120, 180, 0.18)';
+        ctx.fillStyle = 'rgba(127, 147, 187, 0.7)';
+        ctx.font = '10px -apple-system, sans-serif';
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'middle';
+        for (let alt = 0; alt <= 90; alt += 15) {
+            const y = top + chartHeight * (1 - alt / 90);
+            ctx.beginPath();
+            ctx.moveTo(marginLeft, y);
+            ctx.lineTo(marginLeft + chartWidth, y);
+            ctx.stroke();
+            ctx.fillText(alt + '°', marginLeft - 8, y);
+        }
+
+        // Azimuth grid
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+        const cardinal = { 0: 'N', 45: 'NE', 90: 'E', 135: 'SE', 180: 'S', 225: 'SW', 270: 'W', 315: 'NW' };
+        for (let az = 0; az < 360; az += 45) {
+            const x = marginLeft + chartWidth * (az / 360);
+            ctx.beginPath();
+            ctx.moveTo(x, top);
+            ctx.lineTo(x, top + chartHeight);
+            ctx.stroke();
+            ctx.fillStyle = cardinal[az] === 'N' || cardinal[az] === 'S' || cardinal[az] === 'E' || cardinal[az] === 'W'
+                ? 'rgba(196, 213, 245, 0.85)'
+                : 'rgba(127, 147, 187, 0.55)';
+            ctx.fillText(cardinal[az], x, top + chartHeight + 8);
+        }
+
+        // Horizon
+        const horizonY = top + chartHeight;
+        const horizonGlow = ctx.createLinearGradient(0, horizonY - 60, 0, horizonY);
+        horizonGlow.addColorStop(0, 'rgba(64, 105, 180, 0)');
+        horizonGlow.addColorStop(1, 'rgba(64, 105, 180, 0.22)');
+        ctx.fillStyle = horizonGlow;
+        ctx.fillRect(marginLeft, horizonY - 60, chartWidth, 60);
+
+        ctx.strokeStyle = 'rgba(142, 178, 240, 0.6)';
+        ctx.beginPath();
+        ctx.moveTo(marginLeft, horizonY);
+        ctx.lineTo(marginLeft + chartWidth, horizonY);
+        ctx.stroke();
+
+        // Deterministic star field for the selected date and location.
+        const seed = Math.floor(selectedDate.getTime() / 86400000) + Math.round(latitude * 100) + Math.round(longitude * 100);
+        const random = seededRandom(seed);
+        for (let i = 0; i < 550; i++) {
+            const az = random() * 360;
+            const altitude = Math.pow(random(), 0.7) * 90;
+            const x = marginLeft + chartWidth * (az / 360);
+            const y = top + chartHeight * (1 - altitude / 90);
+            const radius = random() * 1.2 + 0.3;
+            const alpha = random() * 0.55 + 0.2;
+            ctx.beginPath();
+            ctx.fillStyle = 'rgba(214, 228, 255, ' + alpha.toFixed(3) + ')';
+            ctx.arc(x, y, radius, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // Planets
+        const T = (julianDate(selectedDate) - 2451545.0) / 36525.0;
+        const jd = julianDate(selectedDate);
+        const legend = document.getElementById('legend');
+        legend.innerHTML = '';
+
+        let visibleIndex = 0;
+        hitAreas.length = 0;
+        planetData.forEach(function (planet) {
+            const name = planet.name;
+            if (!ELEMENTS[name] || name === 'Earth') {
+                return;
+            }
+
+            const position = horizontalPosition(name, T, jd);
+            const color = COLORS[name] || '#cddcff';
+            const aboveHorizon = position.altitude > 0;
+
+            const x = marginLeft + chartWidth * (position.azimuth / 360);
+            const y = top + chartHeight * (1 - Math.max(-2, position.altitude) / 90);
+
+            hitAreas.push({ name: name, x: x, y: y, radius: 16 });
+
+            ctx.globalAlpha = aboveHorizon ? 1 : 0.25;
+            ctx.beginPath();
+            ctx.fillStyle = color;
+            ctx.arc(x, y, name === 'Jupiter' || name === 'Venus' ? 5 : 3.6, 0, Math.PI * 2);
+            ctx.fill();
+
+            if (hoveredPlanet === name) {
+                ctx.globalAlpha = 0.95;
+                ctx.beginPath();
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 1.5;
+                ctx.arc(x, y, 14, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+
+            if (aboveHorizon) {
+                visibleIndex += 1;
+                ctx.globalAlpha = 0.35;
+                ctx.beginPath();
+                ctx.strokeStyle = color;
+                ctx.arc(x, y, 9, 0, Math.PI * 2);
+                ctx.stroke();
+
+                ctx.globalAlpha = 0.95;
+                ctx.fillStyle = '#e7efff';
+                ctx.font = '11px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'bottom';
+                ctx.fillText(planet.symbol + ' ' + name, x, y - 12 - (visibleIndex % 3) * 13);
+            }
+            ctx.globalAlpha = 1;
+
+            const item = document.createElement('li');
+            if (!aboveHorizon) {
+                item.className = 'below';
+            }
+            item.innerHTML =
+                '<span><span class="dot" style="background:' + color + '"></span>' + name + '</span>' +
+                '<span class="status">' + (aboveHorizon ? Math.round(position.altitude) + '° up' : 'below') + '</span>';
+            legend.appendChild(item);
+        });
+
+        // Sun position is shown only to orient the viewer.
+        ctx.restore();
+    }
+
+    function planetAt(clientX, clientY) {
+        let best = null;
+        let bestDistance = Infinity;
+        for (const hit of hitAreas) {
+            const dx = clientX - hit.x;
+            const dy = clientY - hit.y;
+            const distance = Math.hypot(dx, dy);
+            if (distance <= hit.radius && distance < bestDistance) {
+                best = hit;
+                bestDistance = distance;
+            }
+        }
+        return best;
+    }
+
+    canvas.addEventListener('mousemove', function (event) {
+        const hit = planetAt(event.clientX, event.clientY);
+        const name = hit ? hit.name : null;
+        document.body.style.cursor = name ? 'pointer' : 'default';
+        if (name !== hoveredPlanet) {
+            hoveredPlanet = name;
+            draw();
+        }
+    });
+
+    canvas.addEventListener('mouseleave', function () {
+        document.body.style.cursor = 'default';
+        if (hoveredPlanet) {
+            hoveredPlanet = null;
+            draw();
+        }
+    });
+
+    canvas.addEventListener('click', function (event) {
+        const hit = planetAt(event.clientX, event.clientY);
+        if (!hit) {
+            return;
+        }
+        if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.planetPicked) {
+            window.webkit.messageHandlers.planetPicked.postMessage(hit.name);
+        }
+    });
+
+    window.addEventListener('resize', resize);
+    resize();
+})();
+</script>
+</body>
+</html>
