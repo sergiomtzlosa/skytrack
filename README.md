@@ -2,6 +2,8 @@
 
 SkyTrack is a native macOS planetarium. It plots the positions of the eight planets and Pluto for any place and time, and pairs the sky chart with an interactive 3D globe of the selected world. The chart is rendered locally from bundled resources, so no network connection is needed to view the sky.
 
+![SkyTrack preview](preview.png)
+
 ## Features
 
 - **All-sky planet chart** — an altitude/azimuth chart generated offline by the bundled `sky.html`, with a deterministic star field, hover highlighting, and above/below-horizon states.
