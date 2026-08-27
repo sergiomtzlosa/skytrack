@@ -13,9 +13,11 @@
 		546A8BF8F0536992A52BB834 /* earth_day.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F0FCC3264297535FFF4C2404 /* earth_day.jpg */; };
 		567ADF75D1FA8F1178963B3C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDEC544C2910F314A293990A /* MapKit.framework */; };
 		5B4CF30C53AF87A39AE8285C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C447DB7EE19E4CDD0292BF /* AppDelegate.m */; };
+		6790344B266FB27587F2FAFA /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 96675BED5CC13F649514F2E1 /* AppIcon.icns */; };
 		6FA234FE89F62A61EDC6FBED /* SceneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1A1727D98574A2C73FF5207 /* SceneKit.framework */; };
 		731A2B0F452D810FB022DA02 /* earth_clouds.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A94F174DCC0F9D942F80FB0 /* earth_clouds.png */; };
-		7FC5573B8EF11022F9EF8716 /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D298027C71B2BCEBDAE68B6 /* MainWindowController.m */; };
+		7FC5573B8EF11022F9EF8716 /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D298027C71B2BCEBDAE68B6 /* MainWindowController.m */; settings = {COMPILER_FLAGS = "-w"; }; };
+		8409D531ACA0F438BCEF8A15 /* AppIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 025DA4641633168C986F70F0 /* AppIcon.png */; };
 		85CEAB5C7E6FF787A8BE9F98 /* earth_normal.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9CD0B982E9D59E1782C7E0B8 /* earth_normal.jpg */; };
 		9DBAC6060046D714445D1D18 /* earth_specular.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FFED94507C41459667CF1707 /* earth_specular.jpg */; };
 		AD9050DA096D449E4888AF07 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A00505B36E5DCAD5B30ADA8 /* main.m */; };
@@ -24,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		025DA4641633168C986F70F0 /* AppIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcon.png; sourceTree = "<group>"; };
 		09BD0501794B07828AF37234 /* sky.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = sky.html; sourceTree = "<group>"; };
 		2671A1F5DE1CE976AE61C11D /* PlanetModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlanetModel.m; sourceTree = "<group>"; };
 		4F8872D8BD640BC4D41B5D39 /* PlanetModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlanetModel.h; sourceTree = "<group>"; };
@@ -33,6 +36,7 @@
 		7019B4A77973785F0F2EF7C7 /* MainWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainWindowController.h; sourceTree = "<group>"; };
 		823D5C79928E13DEDDB7906D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		85E5203DB118BAF2D7F0359F /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		96675BED5CC13F649514F2E1 /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
 		9952E5EB28094E7E4BC4DAE3 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		9A00505B36E5DCAD5B30ADA8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9CD0B982E9D59E1782C7E0B8 /* earth_normal.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = earth_normal.jpg; sourceTree = "<group>"; };
@@ -98,6 +102,8 @@
 		ECCEBD5D00E6207C31F32268 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				96675BED5CC13F649514F2E1 /* AppIcon.icns */,
+				025DA4641633168C986F70F0 /* AppIcon.png */,
 				6A94F174DCC0F9D942F80FB0 /* earth_clouds.png */,
 				F0FCC3264297535FFF4C2404 /* earth_day.jpg */,
 				9CD0B982E9D59E1782C7E0B8 /* earth_normal.jpg */,
@@ -145,7 +151,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 2710;
 				TargetAttributes = {
 					FFD1E35F7CB23CA5E8282CA0 = {
 						DevelopmentTeam = "";
@@ -177,6 +183,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6790344B266FB27587F2FAFA /* AppIcon.icns in Resources */,
+				8409D531ACA0F438BCEF8A15 /* AppIcon.png in Resources */,
 				731A2B0F452D810FB022DA02 /* earth_clouds.png in Resources */,
 				546A8BF8F0536992A52BB834 /* earth_day.jpg in Resources */,
 				85CEAB5C7E6FF787A8BE9F98 /* earth_normal.jpg in Resources */,
@@ -238,11 +246,13 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -263,6 +273,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -305,11 +316,13 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -323,6 +336,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
@@ -335,9 +349,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = SkyTrack/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.skytrack.app;
 				PRODUCT_NAME = SkyTrack;
@@ -351,9 +370,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = SkyTrack/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.skytrack.app;
 				PRODUCT_NAME = SkyTrack;
